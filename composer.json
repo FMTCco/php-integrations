@@ -1,10 +1,11 @@
 {
   "name": "FMTCco/php-integrations",
-  "description": "A simple re-useable PHP wrapper for handling affiliate networks",
+  "description": "A simple reusable PHP wrapper for handling affiliate networks",
   "keywords": [
     "php",
     "networks",
-    "api"
+    "api",
+    "FMTC"
   ],
   "license": "MIT",
   "type": "library",
