@@ -1,0 +1,35 @@
+{
+  "name": "FMTCco/php-integrations",
+  "description": "A simple re-useable PHP wrapper for handling affiliate networks",
+  "keywords": [
+    "php",
+    "networks",
+    "api"
+  ],
+  "license": "MIT",
+  "type": "library",
+  "homepage": "https://github.com/FMTCco/php-integrations",
+  "authors":[
+    {
+      "name": "James Weston",
+      "email": "james@savannah.io"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^6.2",
+    "jamesvweston/php-utilities": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "FMTCco\\Integrations\\": "src"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable" : true
+}

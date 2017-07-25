@@ -1,0 +1,7 @@
+vendor/
+
+# IntelliJ directory
+.idea/
+
+composer.lock
+.env
