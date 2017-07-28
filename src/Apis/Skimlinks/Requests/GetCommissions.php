@@ -3,6 +3,8 @@
 namespace FMTCco\Integrations\Apis\Skimlinks\Requests;
 
 
+use FMTCco\Integrations\Traits\SimpleSerializable;
+
 /**
  * Class GetCommissions
  * @see     https://api-reports.skimlinks.com/doc/#reportcommissions
@@ -10,6 +12,9 @@ namespace FMTCco\Integrations\Apis\Skimlinks\Requests;
  */
 class GetCommissions implements \JsonSerializable
 {
+
+    use SimpleSerializable;
+
 
     /**
      * Required
@@ -69,22 +74,6 @@ class GetCommissions implements \JsonSerializable
      */
     protected $publisherID;
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $object['endDate']                  = $this->endDate;
-        $object['startDate']                = $this->startDate;
-        $object['commissionID']             = $this->commissionID;
-        $object['status']                   = $this->status;
-        $object['domainID']                 = $this->domainID;
-        $object['format']                   = $this->format;
-        $object['customID']                 = $this->customID;
-        $object['publisherID']              = $this->publisherID;
-
-        return $object;
-    }
 
     /**
      * @return string

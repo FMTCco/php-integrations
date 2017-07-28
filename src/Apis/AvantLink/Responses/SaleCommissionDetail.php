@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\AvantLink\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class SaleCommissionDetail extends BaseAvantLinkResponse implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -115,26 +116,28 @@ class SaleCommissionDetail extends BaseAvantLinkResponse implements \JsonSeriali
 
     public function __construct($data = [])
     {
-        $this->Merchant                 = AU::get($data['Merchant']);
-        $this->Merchant_Id              = AU::get($data['Merchant_Id']);
-        $this->Website                  = AU::get($data['Website']);
-        $this->Website_Id               = AU::get($data['Website_Id']);
-        $this->Tool_Name                = AU::get($data['Tool_Name']);
-        $this->Campaign_Product_Link    = AU::get($data['Campaign_Product_Link']);
-        $this->Coupon_Code              = AU::get($data['Coupon_Code']);
-        $this->Custom_Tracking_Code     = AU::get($data['Custom_Tracking_Code']);
-        $this->Order_Id                 = AU::get($data['Order_Id']);
-        $this->Transaction_Amount       = AU::get($data['Transaction_Amount']);
-        $this->Base_Commission          = AU::get($data['Base_Commission']);
-        $this->Incentive_Commission     = AU::get($data['Incentive_Commission']);
-        $this->Total_Commission         = AU::get($data['Total_Commission']);
-        $this->Transaction_Type         = AU::get($data['Transaction_Type']);
-        $this->Transaction_Date         = AU::get($data['Transaction_Date']);
-        $this->Last_Click_Through       = AU::get($data['Last_Click_Through']);
-        $this->Mobile_Order             = AU::get($data['Mobile_Order']);
-        $this->New_Customer             = AU::get($data['New_Customer']);
-        $this->Item_Count               = AU::get($data['Item_Count']);
-        $this->AvantLink_Transaction_Id = AU::get($data['AvantLink_Transaction_Id']);
+        $this->Merchant                 = AU::getUnset($data, 'Merchant');
+        $this->Merchant_Id              = AU::getUnset($data, 'Merchant_Id');
+        $this->Website                  = AU::getUnset($data, 'Website');
+        $this->Website_Id               = AU::getUnset($data, 'Website_Id');
+        $this->Tool_Name                = AU::getUnset($data, 'Tool_Name');
+        $this->Campaign_Product_Link    = AU::getUnset($data, 'Campaign_Product_Link');
+        $this->Coupon_Code              = AU::getUnset($data, 'Coupon_Code');
+        $this->Custom_Tracking_Code     = AU::getUnset($data, 'Custom_Tracking_Code');
+        $this->Order_Id                 = AU::getUnset($data, 'Order_Id');
+        $this->Transaction_Amount       = AU::getUnset($data, 'Transaction_Amount');
+        $this->Base_Commission          = AU::getUnset($data, 'Base_Commission');
+        $this->Incentive_Commission     = AU::getUnset($data, 'Incentive_Commission');
+        $this->Total_Commission         = AU::getUnset($data, 'Total_Commission');
+        $this->Transaction_Type         = AU::getUnset($data, 'Transaction_Type');
+        $this->Transaction_Date         = AU::getUnset($data, 'Transaction_Date');
+        $this->Last_Click_Through       = AU::getUnset($data, 'Last_Click_Through');
+        $this->Mobile_Order             = AU::getUnset($data, 'Mobile_Order');
+        $this->New_Customer             = AU::getUnset($data, 'New_Customer');
+        $this->Item_Count               = AU::getUnset($data, 'Item_Count');
+        $this->AvantLink_Transaction_Id = AU::getUnset($data, 'AvantLink_Transaction_Id');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

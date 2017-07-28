@@ -3,6 +3,8 @@
 namespace FMTCco\Integrations\Apis\Skimlinks\Requests;
 
 
+use FMTCco\Integrations\Traits\SimpleSerializable;
+
 /**
  * Class GetCommissionsHistory
  * @see     https://api-reports.skimlinks.com/doc/#reportcommissionshistory
@@ -10,6 +12,9 @@ namespace FMTCco\Integrations\Apis\Skimlinks\Requests;
  */
 class GetCommissionsHistory implements \JsonSerializable
 {
+
+    use SimpleSerializable;
+
 
     /**
      * Required. ISO 8601 timestamp
@@ -86,27 +91,6 @@ class GetCommissionsHistory implements \JsonSerializable
      */
     protected $event;
 
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $object['endEventTime']             = $this->endEventTime;
-        $object['startEventTime']           = $this->startEventTime;
-        $object['commissionID']             = $this->commissionID;
-        $object['startDate']                = $this->startDate;
-        $object['endDate']                  = $this->endDate;
-        $object['domainID']                 = $this->domainID;
-        $object['format']                   = $this->format;
-        $object['endEventID']               = $this->endEventID;
-        $object['startEventID']             = $this->startEventID;
-        $object['customID']                 = $this->customID;
-        $object['publisherID']              = $this->publisherID;
-        $object['event']                    = $this->event;
-
-        return $object;
-    }
 
     /**
      * @return string

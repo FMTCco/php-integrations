@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\ShareASale\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class EditTrail implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -50,13 +51,15 @@ class EditTrail implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->transid                  = AU::get($data['transid']);
-        $this->editdate                 = AU::get($data['editdate']);
-        $this->originaltransamount      = AU::get($data['originaltransamount']);
-        $this->originalcommission       = AU::get($data['originalcommission']);
-        $this->newtransamount           = AU::get($data['newtransamount']);
-        $this->newcommission            = AU::get($data['newcommission']);
-        $this->affcomment               = AU::get($data['affcomment']);
+        $this->transid                  = AU::getUnset($data, 'transid');
+        $this->editdate                 = AU::getUnset($data, 'editdate');
+        $this->originaltransamount      = AU::getUnset($data, 'originaltransamount');
+        $this->originalcommission       = AU::getUnset($data, 'originalcommission');
+        $this->newtransamount           = AU::getUnset($data, 'newtransamount');
+        $this->newcommission            = AU::getUnset($data, 'newcommission');
+        $this->affcomment               = AU::getUnset($data, 'affcomment');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

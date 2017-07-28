@@ -18,6 +18,9 @@ trait SimpleSerializable
      */
     private function simpleSerialize()
     {
-        return get_object_vars($this);
+        $data               = get_object_vars($this);
+        if (isset($data['unmappedVariables']))
+            unset($data['unmappedVariables']);
+        return $data;
     }
 }

@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\ShareASale\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Activity implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -130,29 +131,31 @@ class Activity implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->transid                  = AU::get($data['transid']);
-        $this->userid                   = AU::get($data['userid']);
-        $this->merchantid               = AU::get($data['merchantid']);
-        $this->transdate                = AU::get($data['transdate']);
-        $this->transamount              = AU::get($data['transamount']);
-        $this->commission               = AU::get($data['commission']);
-        $this->comment                  = AU::get($data['comment']);
-        $this->voided                   = AU::get($data['voided']);
-        $this->pendingdate              = AU::get($data['pendingdate']);
-        $this->locked                   = AU::get($data['locked']);
-        $this->affcomment               = AU::get($data['affcomment']);
-        $this->bannerpage               = AU::get($data['bannerpage']);
-        $this->reversaldate             = AU::get($data['reversaldate']);
-        $this->clickdate                = AU::get($data['clickdate']);
-        $this->clicktime                = AU::get($data['clicktime']);
-        $this->bannerid                 = AU::get($data['bannerid']);
-        $this->skulist                  = AU::get($data['skulist']);
-        $this->quantitylist             = AU::get($data['quantitylist']);
-        $this->lockdate                 = AU::get($data['lockdate']);
-        $this->paiddate                 = AU::get($data['paiddate']);
-        $this->merchantorganization     = AU::get($data['merchantorganization']);
-        $this->merchantwebsite          = AU::get($data['merchantwebsite']);
-        $this->transtype                = AU::get($data['transtype']);
+        $this->transid                  = AU::getUnset($data, 'transid');
+        $this->userid                   = AU::getUnset($data, 'userid');
+        $this->merchantid               = AU::getUnset($data, 'merchantid');
+        $this->transdate                = AU::getUnset($data, 'transdate');
+        $this->transamount              = AU::getUnset($data, 'transamount');
+        $this->commission               = AU::getUnset($data, 'commission');
+        $this->comment                  = AU::getUnset($data, 'comment');
+        $this->voided                   = AU::getUnset($data, 'voided');
+        $this->pendingdate              = AU::getUnset($data, 'pendingdate');
+        $this->locked                   = AU::getUnset($data, 'locked');
+        $this->affcomment               = AU::getUnset($data, 'affcomment');
+        $this->bannerpage               = AU::getUnset($data, 'bannerpage');
+        $this->reversaldate             = AU::getUnset($data, 'reversaldate');
+        $this->clickdate                = AU::getUnset($data, 'clickdate');
+        $this->clicktime                = AU::getUnset($data, 'clicktime');
+        $this->bannerid                 = AU::getUnset($data, 'bannerid');
+        $this->skulist                  = AU::getUnset($data, 'skulist');
+        $this->quantitylist             = AU::getUnset($data, 'quantitylist');
+        $this->lockdate                 = AU::getUnset($data, 'lockdate');
+        $this->paiddate                 = AU::getUnset($data, 'paiddate');
+        $this->merchantorganization     = AU::getUnset($data, 'merchantorganization');
+        $this->merchantwebsite          = AU::getUnset($data, 'merchantwebsite');
+        $this->transtype                = AU::getUnset($data, 'transtype');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

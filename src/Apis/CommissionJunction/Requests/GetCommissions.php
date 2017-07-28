@@ -6,6 +6,7 @@ namespace FMTCco\Integrations\Apis\CommissionJunction\Requests;
 class GetCommissions implements \JsonSerializable
 {
 
+    //  **NOTE** Do not use SimpleSerializable
     /**
      * Use this parameter to specify the date
      * parameter as either the event date or the posting date. Options include the following
@@ -58,7 +59,7 @@ class GetCommissions implements \JsonSerializable
      *
      * @var string|null
      */
-    protected $action­status;
+    protected $action_status;
 
     /**
      * Use this parameter to specify the Commission ID
@@ -85,7 +86,7 @@ class GetCommissions implements \JsonSerializable
         $object['cids']                     = $this->cids;
         $object['action-types']             = $this->action_types;
         $object['aids']                     = $this->aids;
-        $object['action-status']            = $this->action­status;
+        $object['action-status']            = $this->action_status;
         $object['commission-id']            = $this->commission_id;
         $object['website-ids']              = $this->website_ids;
 
@@ -191,17 +192,17 @@ class GetCommissions implements \JsonSerializable
     /**
      * @return null|string
      */
-    public function getAction­status()
+    public function getActionStatus()
     {
-        return $this->action­status;
+        return $this->action_status;
     }
 
     /**
-     * @param null|string $action­status
+     * @param null|string $action_status
      */
-    public function setAction­status($action­status)
+    public function setActionStatus($action_status)
     {
-        $this->action­status = $action­status;
+        $this->action_status = $action_status;
     }
 
     /**

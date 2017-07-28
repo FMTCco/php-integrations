@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\Skimlinks\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class CommissionHistory implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -139,25 +140,25 @@ class CommissionHistory implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->eventID                  = AU::get($data['eventID']);
-        $this->eventTime                = AU::get($data['eventTime']);
-        $this->event                    = AU::get($data['event']);
-        $this->commissionID             = AU::get($data['commissionID']);
-        $this->transactionDate          = AU::get($data['transactionDate']);
-        $this->publisherID              = AU::get($data['publisherID']);
-        $this->domainID                 = AU::get($data['domainID']);
-        $this->merchantID               = AU::get($data['merchantID']);
-        $this->commissionValue          = AU::get($data['commissionValue']);
-        $this->orderValue               = AU::get($data['orderValue']);
-        $this->currency                 = AU::get($data['currency']);
-        $this->status                   = AU::get($data['status']);
-        $this->items                    = AU::get($data['items']);
-        $this->commissionType           = AU::get($data['commissionType']);
-        $this->clickTime                = AU::get($data['clickTime']);
-        $this->remoteUserAgent          = AU::get($data['remoteUserAgent']);
-        $this->remoteReferer            = AU::get($data['remoteReferer']);
-        $this->customID                 = AU::get($data['customID']);
-        $this->url                      = AU::get($data['url']);
+        $this->eventID                  = AU::getUnset($data, 'eventID');
+        $this->eventTime                = AU::getUnset($data, 'eventTime');
+        $this->event                    = AU::getUnset($data, 'event');
+        $this->commissionID             = AU::getUnset($data, 'commissionID');
+        $this->transactionDate          = AU::getUnset($data, 'transactionDate');
+        $this->publisherID              = AU::getUnset($data, 'publisherID');
+        $this->domainID                 = AU::getUnset($data, 'domainID');
+        $this->merchantID               = AU::getUnset($data, 'merchantID');
+        $this->commissionValue          = AU::getUnset($data, 'commissionValue');
+        $this->orderValue               = AU::getUnset($data, 'orderValue');
+        $this->currency                 = AU::getUnset($data, 'currency');
+        $this->status                   = AU::getUnset($data, 'status');
+        $this->items                    = AU::getUnset($data, 'items');
+        $this->commissionType           = AU::getUnset($data, 'commissionType');
+        $this->clickTime                = AU::getUnset($data, 'clickTime');
+        $this->remoteUserAgent          = AU::getUnset($data, 'remoteUserAgent');
+        $this->remoteReferer            = AU::getUnset($data, 'remoteReferer');
+        $this->customID                 = AU::getUnset($data, 'customID');
+        $this->url                      = AU::getUnset($data, 'url');
 
         $this->products                 = [];
         $key_set                        = array_keys($data);
@@ -166,8 +167,11 @@ class CommissionHistory implements \JsonSerializable
             if (preg_match("/product/", $key))
             {
                 $this->products         = $data[$key];
+                unset($data[$key]);
             }
         }
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     /**

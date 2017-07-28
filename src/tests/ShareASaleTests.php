@@ -3,6 +3,8 @@
 namespace FMTCco\Integrations\Tests;
 
 
+use Dotenv\Dotenv;
+use FMTCco\Integrations\Apis\ShareASale\Requests\GetActivity;
 use FMTCco\Integrations\Apis\ShareASale\ShareASaleApi;
 
 class ShareASaleTests extends \PHPUnit_Framework_TestCase
@@ -13,6 +15,19 @@ class ShareASaleTests extends \PHPUnit_Framework_TestCase
         $api                        = $this->getApi();
         if (is_null($api))
             return;
+
+        $request                    = new GetActivity();
+        $request->setDateStart('05/01/2017');
+        $request->setDateEnd('07/27/2017');
+
+        $response                   = $api->getActivity($request);
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\ShareASale\Responses\GetActivityResponse::class, $response);
+
+        foreach ($response->getData() AS $activity)
+        {
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\ShareASale\Responses\Activity::class, $activity);
+            $this->assertEmpty($activity->getUnmappedVariables());
+        }
     }
 
     /**
@@ -20,6 +35,9 @@ class ShareASaleTests extends \PHPUnit_Framework_TestCase
      */
     private function getApi ()
     {
+        $dotEnv                     = new Dotenv('./');
+        $dotEnv->load();
+
         $affiliate_id               = getenv('SHARE_A_SALE_AFFILIATE_ID');
         $token                      = getenv('SHARE_A_SALE_TOKEN');
         $secret_key                 = getenv('SHARE_A_SALE_SECRET_KEY');

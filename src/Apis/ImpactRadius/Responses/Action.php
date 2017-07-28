@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\ImpactRadius\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Action implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -40,7 +41,17 @@ class Action implements \JsonSerializable
     /**
      * @var string
      */
+    protected $Status;
+
+    /**
+     * @var string
+     */
     protected $State;
+
+    /**
+     * @var string
+     */
+    protected $LockedStatus;
 
     /**
      * @var int
@@ -176,38 +187,42 @@ class Action implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->Id                       = AU::get($data['Id']);
-        $this->CampaignId               = AU::get($data['CampaignId']);
-        $this->CampaignName             = AU::get($data['CampaignName']);
-        $this->ActionTrackerId          = AU::get($data['ActionTrackerId']);
-        $this->ActionTrackerName        = AU::get($data['ActionTrackerName']);
-        $this->State                    = AU::get($data['State']);
-        $this->AdId                     = AU::get($data['AdId']);
-        $this->Payout                   = AU::get($data['Payout']);
-        $this->DeltaPayout              = AU::get($data['DeltaPayout']);
-        $this->IntendedPayout           = AU::get($data['IntendedPayout']);
-        $this->Amount                   = AU::get($data['Amount']);
-        $this->DeltaAmount              = AU::get($data['DeltaAmount']);
-        $this->IntendedAmount           = AU::get($data['IntendedAmount']);
-        $this->Currency                 = AU::get($data['Currency']);
-        $this->ReferringDate            = AU::get($data['ReferringDate']);
-        $this->EventDate                = AU::get($data['EventDate']);
-        $this->CreationDate             = AU::get($data['CreationDate']);
-        $this->LockingDate              = AU::get($data['LockingDate']);
-        $this->ClearedDate              = AU::get($data['ClearedDate']);
-        $this->ReferringType            = AU::get($data['ReferringType']);
-        $this->ReferringDomain          = AU::get($data['ReferringDomain']);
-        $this->PromoCode                = AU::get($data['PromoCode']);
-        $this->Oid                      = AU::get($data['Oid']);
-        $this->CustomerArea             = AU::get($data['CustomerArea']);
-        $this->CustomerCity             = AU::get($data['CustomerCity']);
-        $this->CustomerRegion           = AU::get($data['CustomerRegion']);
-        $this->CustomerCountry          = AU::get($data['CustomerCountry']);
-        $this->SubId1                   = AU::get($data['SubId1']);
-        $this->SubId2                   = AU::get($data['SubId2']);
-        $this->SubId3                   = AU::get($data['SubId3']);
-        $this->SharedId                 = AU::get($data['SharedId']);
-        $this->Uri                      = AU::get($data['Uri']);
+        $this->Id                       = AU::getUnset($data, 'Id');
+        $this->CampaignId               = AU::getUnset($data, 'CampaignId');
+        $this->CampaignName             = AU::getUnset($data, 'CampaignName');
+        $this->ActionTrackerId          = AU::getUnset($data, 'ActionTrackerId');
+        $this->ActionTrackerName        = AU::getUnset($data, 'ActionTrackerName');
+        $this->Status                   = AU::getUnset($data, 'Status');
+        $this->State                    = AU::getUnset($data, 'State');
+        $this->LockedStatus             = AU::getUnset($data, 'LockedStatus');
+        $this->AdId                     = AU::getUnset($data, 'AdId');
+        $this->Payout                   = AU::getUnset($data, 'Payout');
+        $this->DeltaPayout              = AU::getUnset($data, 'DeltaPayout');
+        $this->IntendedPayout           = AU::getUnset($data, 'IntendedPayout');
+        $this->Amount                   = AU::getUnset($data, 'Amount');
+        $this->DeltaAmount              = AU::getUnset($data, 'DeltaAmount');
+        $this->IntendedAmount           = AU::getUnset($data, 'IntendedAmount');
+        $this->Currency                 = AU::getUnset($data, 'Currency');
+        $this->ReferringDate            = AU::getUnset($data, 'ReferringDate');
+        $this->EventDate                = AU::getUnset($data, 'EventDate');
+        $this->CreationDate             = AU::getUnset($data, 'CreationDate');
+        $this->LockingDate              = AU::getUnset($data, 'LockingDate');
+        $this->ClearedDate              = AU::getUnset($data, 'ClearedDate');
+        $this->ReferringType            = AU::getUnset($data, 'ReferringType');
+        $this->ReferringDomain          = AU::getUnset($data, 'ReferringDomain');
+        $this->PromoCode                = AU::getUnset($data, 'PromoCode');
+        $this->Oid                      = AU::getUnset($data, 'Oid');
+        $this->CustomerArea             = AU::getUnset($data, 'CustomerArea');
+        $this->CustomerCity             = AU::getUnset($data, 'CustomerCity');
+        $this->CustomerRegion           = AU::getUnset($data, 'CustomerRegion');
+        $this->CustomerCountry          = AU::getUnset($data, 'CustomerCountry');
+        $this->SubId1                   = AU::getUnset($data, 'SubId1');
+        $this->SubId2                   = AU::getUnset($data, 'SubId2');
+        $this->SubId3                   = AU::getUnset($data, 'SubId3');
+        $this->SharedId                 = AU::getUnset($data, 'SharedId');
+        $this->Uri                      = AU::getUnset($data, 'Uri');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()
@@ -335,9 +350,25 @@ class Action implements \JsonSerializable
     /**
      * @return string
      */
+    public function getStatus()
+    {
+        return $this->Status;
+    }
+
+    /**
+     * @return string
+     */
     public function getState()
     {
         return $this->State;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLockedStatus()
+    {
+        return $this->LockedStatus;
     }
 
     /**
@@ -397,7 +428,7 @@ class Action implements \JsonSerializable
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getCurrency()
     {
@@ -405,7 +436,7 @@ class Action implements \JsonSerializable
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getReferringDate()
     {
@@ -445,7 +476,7 @@ class Action implements \JsonSerializable
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getReferringType()
     {
@@ -485,7 +516,7 @@ class Action implements \JsonSerializable
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getCustomerCity()
     {
@@ -493,7 +524,7 @@ class Action implements \JsonSerializable
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getCustomerRegion()
     {
@@ -501,7 +532,7 @@ class Action implements \JsonSerializable
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getCustomerCountry()
     {
@@ -547,4 +578,13 @@ class Action implements \JsonSerializable
     {
         return $this->Uri;
     }
+
+    /**
+     * @return array|null
+     */
+    public function getUnmappedVariables()
+    {
+        return $this->unmappedVariables;
+    }
+
 }

@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\Rakuten\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class SalesActivityReport implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
     /**
      * @var string
@@ -88,20 +89,22 @@ class SalesActivityReport implements \JsonSerializable
      */
     public function __construct($data = [])
     {
-        $this->MID                      = AU::get($data['MID']);
-        $this->Advertiser_Name          = AU::get($data['Advertiser Name']);
-        $this->Num_Of_Impressions       = AU::get($data['# of Impressions']);
-        $this->Num_Of_Clicks            = AU::get($data['# of Clicks']);
-        $this->Click_Through_Rate       = AU::get($data['Click Through Rate (CTR)']);
-        $this->Num_Of_Orders            = AU::get($data['# of Orders']);
-        $this->Orders_Per_Click_Ratio   = AU::get($data['Orders/Click']);
-        $this->Earnings_Per_Click       = AU::get($data['Earnings Per Click (EPC)']);
-        $this->Num_Of_Items             = AU::get($data['# of Items']);
-        $this->Num_Of_Cancelled_Items   = AU::get($data['# of Cancelled Items']);
-        $this->Sales                    = AU::get($data['Sales']);
-        $this->Baseline_Commission      = AU::get($data['Baseline Commission']);
-        $this->Adjusted_Commission      = AU::get($data['Adjusted Commission']);
-        $this->Total_Commission         = AU::get($data['Total Commission']);
+        $this->MID                      = AU::getUnset($data, 'MID');
+        $this->Advertiser_Name          = AU::getUnset($data, 'Advertiser Name');
+        $this->Num_Of_Impressions       = AU::getUnset($data, '# of Impressions');
+        $this->Num_Of_Clicks            = AU::getUnset($data, '# of Clicks');
+        $this->Click_Through_Rate       = AU::getUnset($data, 'Click Through Rate (CTR)');
+        $this->Num_Of_Orders            = AU::getUnset($data, '# of Orders');
+        $this->Orders_Per_Click_Ratio   = AU::getUnset($data, 'Orders/Click');
+        $this->Earnings_Per_Click       = AU::getUnset($data, 'Earnings Per Click (EPC)');
+        $this->Num_Of_Items             = AU::getUnset($data, '# of Items');
+        $this->Num_Of_Cancelled_Items   = AU::getUnset($data, '# of Cancelled Items');
+        $this->Sales                    = AU::getUnset($data, 'Sales');
+        $this->Baseline_Commission      = AU::getUnset($data, 'Baseline Commission');
+        $this->Adjusted_Commission      = AU::getUnset($data, 'Adjusted Commission');
+        $this->Total_Commission         = AU::getUnset($data, 'Total Commission');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     /**

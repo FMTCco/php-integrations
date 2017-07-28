@@ -3,8 +3,13 @@
 namespace FMTCco\Integrations\Apis\ShareASale\Requests;
 
 
+use FMTCco\Integrations\Traits\SimpleSerializable;
+
 class GetActivity implements \JsonSerializable
 {
+
+    use SimpleSerializable;
+
 
     /**
      * Formatted as mm/dd/yyyy
@@ -61,24 +66,6 @@ class GetActivity implements \JsonSerializable
      */
     protected $format                       = 'xml';
 
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $object['dateStart']                = $this->dateStart;
-        $object['dateEnd']                  = $this->dateEnd;
-        $object['merchantId']               = $this->merchantId;
-        $object['lockDate']                 = $this->lockDate;
-        $object['paidDate']                 = $this->paidDate;
-        $object['sortCol']                  = $this->sortCol;
-        $object['sortDir']                  = $this->sortDir;
-        $object['XMLFormat']                = $this->XMLFormat;
-        $object['format']                   = $this->format;
-
-        return $object;
-    }
 
     /**
      * @return null|string

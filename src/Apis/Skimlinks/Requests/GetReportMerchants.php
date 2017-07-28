@@ -3,6 +3,8 @@
 namespace FMTCco\Integrations\Apis\Skimlinks\Requests;
 
 
+use FMTCco\Integrations\Traits\SimpleSerializable;
+
 /**
  * Class GetReportMerchants
  * @see     https://api-reports.skimlinks.com/doc/#reportmerchants
@@ -10,6 +12,9 @@ namespace FMTCco\Integrations\Apis\Skimlinks\Requests;
  */
 class GetReportMerchants implements \JsonSerializable
 {
+
+    use SimpleSerializable;
+
 
     /**
      * Required
@@ -85,26 +90,6 @@ class GetReportMerchants implements \JsonSerializable
      */
     protected $merchantID;
 
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $object['endDate']                  = $this->endDate;
-        $object['startDate']                = $this->startDate;
-        $object['orderBy']                  = $this->orderBy;
-        $object['product']                  = $this->product;
-        $object['domainID']                 = $this->domainID;
-        $object['merchantName']             = $this->merchantName;
-        $object['format']                   = $this->format;
-        $object['responseFrom']             = $this->responseFrom;
-        $object['responseLimit']            = $this->responseLimit;
-        $object['publisherID']              = $this->publisherID;
-        $object['merchantID']               = $this->merchantID;
-
-        return $object;
-    }
 
     /**
      * @return string

@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\Skimlinks\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class ReportMerchant implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -55,13 +56,15 @@ class ReportMerchant implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->merchantID               = AU::get($data['merchantID']);
-        $this->merchantName             = AU::get($data['merchantName']);
-        $this->clicks                   = AU::get($data['clicks']);
-        $this->totalCommission          = AU::get($data['totalCommission']);
-        $this->ecpc                     = AU::get($data['ecpc']);
-        $this->conversionRate           = AU::get($data['conversionRate']);
-        $this->currency                 = AU::get($data['currency']);
+        $this->merchantID               = AU::getUnset($data, 'merchantID');
+        $this->merchantName             = AU::getUnset($data, 'merchantName');
+        $this->clicks                   = AU::getUnset($data, 'clicks');
+        $this->totalCommission          = AU::getUnset($data, 'totalCommission');
+        $this->ecpc                     = AU::getUnset($data, 'ecpc');
+        $this->conversionRate           = AU::getUnset($data, 'conversionRate');
+        $this->currency                 = AU::getUnset($data, 'currency');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     /**

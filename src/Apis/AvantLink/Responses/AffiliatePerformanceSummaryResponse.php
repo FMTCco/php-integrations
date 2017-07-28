@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\AvantLink\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class AffiliatePerformanceSummaryResponse extends BaseAvantLinkResponse implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
     /**
      * @var AffiliatePerformanceSummary[]

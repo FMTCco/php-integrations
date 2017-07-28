@@ -19,6 +19,8 @@ class GetIndividualItemReportResponse implements \JsonSerializable
 
     public function __construct($data = [])
     {
+        $this->data                     = [];
+
         foreach ($data as $item) {
             $this->data[]               = new Transaction($item);
         }

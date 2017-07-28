@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\Skimlinks\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Commission implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -125,23 +126,23 @@ class Commission implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->commissionID             = AU::get($data['commissionID']);
-        $this->date                     = AU::get($data['date']);
-        $this->publisherID              = AU::get($data['publisherID']);
-        $this->domainID                 = AU::get($data['domainID']);
-        $this->merchantID               = AU::get($data['merchantID']);
-        $this->commissionValue          = AU::get($data['commissionValue']);
-        $this->orderValue               = AU::get($data['orderValue']);
-        $this->currency                 = AU::get($data['currency']);
-        $this->status                   = AU::get($data['status']);
-        $this->items                    = AU::get($data['items']);
-        $this->sales                    = AU::get($data['sales']);
-        $this->clickTime                = AU::get($data['clickTime']);
-        $this->commissionType           = AU::get($data['commissionType']);
-        $this->remoteUserAgent          = AU::get($data['remoteUserAgent']);
-        $this->remoteReferer            = AU::get($data['remoteReferer']);
-        $this->customID                 = AU::get($data['customID']);
-        $this->url                      = AU::get($data['url']);
+        $this->commissionID             = AU::getUnset($data, 'commissionID');
+        $this->date                     = AU::getUnset($data, 'date');
+        $this->publisherID              = AU::getUnset($data, 'publisherID');
+        $this->domainID                 = AU::getUnset($data, 'domainID');
+        $this->merchantID               = AU::getUnset($data, 'merchantID');
+        $this->commissionValue          = AU::getUnset($data, 'commissionValue');
+        $this->orderValue               = AU::getUnset($data, 'orderValue');
+        $this->currency                 = AU::getUnset($data, 'currency');
+        $this->status                   = AU::getUnset($data, 'status');
+        $this->items                    = AU::getUnset($data, 'items');
+        $this->sales                    = AU::getUnset($data, 'sales');
+        $this->clickTime                = AU::getUnset($data, 'clickTime');
+        $this->commissionType           = AU::getUnset($data, 'commissionType');
+        $this->remoteUserAgent          = AU::getUnset($data, 'remoteUserAgent');
+        $this->remoteReferer            = AU::getUnset($data, 'remoteReferer');
+        $this->customID                 = AU::getUnset($data, 'customID');
+        $this->url                      = AU::getUnset($data, 'url');
 
         $this->products                 = [];
         $key_set                        = array_keys($data);
@@ -150,8 +151,35 @@ class Commission implements \JsonSerializable
             if (preg_match("/product/", $key))
             {
                 $this->products         = $data[$key];
+                unset($data[$key]);
+            }
+
+            //  Mappings aren't working for these for some reason...
+            if (preg_match("/remoteuseragent/", strtolower($key)))
+            {
+                $this->remoteUserAgent  = $data[$key];
+                unset($data[$key]);
+            }
+            if (preg_match("/remotereferer/", strtolower($key)))
+            {
+                $this->remoteUserAgent  = $data[$key];
+                unset($data[$key]);
+            }
+            if (preg_match("/customid/", strtolower($key)))
+            {
+                $this->remoteUserAgent  = $data[$key];
+                unset($data[$key]);
+            }
+            if (preg_match("/url/", strtolower($key)))
+            {
+                $this->remoteUserAgent  = $data[$key];
+                unset($data[$key]);
             }
         }
+
+
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     /**

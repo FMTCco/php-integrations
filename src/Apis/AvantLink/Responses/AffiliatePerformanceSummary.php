@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\AvantLink\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class AffiliatePerformanceSummary extends BaseAvantLinkResponse implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -134,28 +135,30 @@ class AffiliatePerformanceSummary extends BaseAvantLinkResponse implements \Json
      */
     public function __construct($data = [])
     {
-        $this->Merchant                 = AU::get($data['Merchant']);
-        $this->Merchant_Id              = AU::get($data['Merchant_Id']);
-        $this->Ad_Impressions           = AU::get($data['Ad_Impressions']);
-        $this->Click_Throughs           = AU::get($data['Click_Throughs']);
-        $this->Sales                    = AU::get($data['Sales']);
-        $this->Number_of_Sales          = AU::get($data['Number_of_Sales']);
-        $this->Mobile_Sales             = AU::get($data['Mobile_Sales']);
-        $this->Number_of_Mobile_Sales   = AU::get($data['Number_of_Mobile_Sales']);
-        $this->Commissions              = AU::get($data['Commissions']);
-        $this->Incentives               = AU::get($data['Incentives']);
-        $this->Number_of_Adjustments    = AU::get($data['Number_of_Adjustments']);
-        $this->Conversion_Rate          = AU::get($data['Conversion_Rate']);
-        $this->New_Customers            = AU::get($data['New_Customers']);
-        $this->New_Customer_            = AU::get($data['New_Customer_']);
-        $this->New_Customer_Sales       = AU::get($data['New_Customer_Sales']);
-        $this->_30_day_Network_Conversion_Rate  = AU::get($data['_30_day_Network_Conversion_Rate']);
-        $this->Average_Sale_Amount      = AU::get($data['Average_Sale_Amount']);
-        $this->Click_Through_Rate       = AU::get($data['Click_Through_Rate']);
-        $this->CPC_Earnings             = AU::get($data['CPC_Earnings']);
-        $this->Placement_Earnings       = AU::get($data['Placement_Earnings']);
-        $this->eCPM                     = AU::get($data['eCPM']);
-        $this->Total_Commissions_Earnings       = AU::get($data['Total_Commissions_Earnings']);
+        $this->Merchant                 = AU::getUnset($data, 'Merchant');
+        $this->Merchant_Id              = AU::getUnset($data, 'Merchant_Id');
+        $this->Ad_Impressions           = AU::getUnset($data, 'Ad_Impressions');
+        $this->Click_Throughs           = AU::getUnset($data, 'Click_Throughs');
+        $this->Sales                    = AU::getUnset($data, 'Sales');
+        $this->Number_of_Sales          = AU::getUnset($data, 'Number_of_Sales');
+        $this->Mobile_Sales             = AU::getUnset($data, 'Mobile_Sales');
+        $this->Number_of_Mobile_Sales   = AU::getUnset($data, 'Number_of_Mobile_Sales');
+        $this->Commissions              = AU::getUnset($data, 'Commissions');
+        $this->Incentives               = AU::getUnset($data, 'Incentives');
+        $this->Number_of_Adjustments    = AU::getUnset($data, 'Number_of_Adjustments');
+        $this->Conversion_Rate          = AU::getUnset($data, 'Conversion_Rate');
+        $this->New_Customers            = AU::getUnset($data, 'New_Customers');
+        $this->New_Customer_            = AU::getUnset($data, 'New_Customer_');
+        $this->New_Customer_Sales       = AU::getUnset($data, 'New_Customer_Sales');
+        $this->_30_day_Network_Conversion_Rate  = AU::getUnset($data, '_30_day_Network_Conversion_Rate');
+        $this->Average_Sale_Amount      = AU::getUnset($data, 'Average_Sale_Amount');
+        $this->Click_Through_Rate       = AU::getUnset($data, 'Click_Through_Rate');
+        $this->CPC_Earnings             = AU::getUnset($data, 'CPC_Earnings');
+        $this->Placement_Earnings       = AU::getUnset($data, 'Placement_Earnings');
+        $this->eCPM                     = AU::getUnset($data, 'eCPM');
+        $this->Total_Commissions_Earnings       = AU::getUnset($data, 'Total_Commissions_Earnings');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

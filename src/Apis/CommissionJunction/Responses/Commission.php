@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\CommissionJunction\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Commission implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -112,6 +113,11 @@ class Commission implements \JsonSerializable
      */
     protected $posting_date;
 
+    /**
+     * @var string
+     */
+    protected $is_cross_device;
+
 
     /**
      * Commission constructor.
@@ -119,26 +125,29 @@ class Commission implements \JsonSerializable
      */
     public function __construct($data = [])
     {
-        $this->action_status            = AU::get($data['action-status']);
-        $this->action_type              = AU::get($data['action-type']);
-        $this->aid                      = AU::get($data['aid']);
-        $this->commission_id            = AU::get($data['commission-id']);
-        $this->country                  = AU::get($data['country']);
-        $this->order_id                 = AU::get($data['order-id']);
-        $this->original                 = AU::get($data['original']);
-        $this->original_action_id       = AU::get($data['original-action-id']);
-        $this->website_id               = AU::get($data['website-id']);
-        $this->action_tracker_id        = AU::get($data['action-tracker-id']);
-        $this->action_tracker_name      = AU::get($data['action-tracker-name']);
-        $this->cid                      = AU::get($data['cid']);
-        $this->advertiser_name          = AU::get($data['advertiser-name']);
-        $this->commission_amount        = AU::get($data['commission-amount']);
-        $this->order_discount           = AU::get($data['order-discount']);
-        $this->sid                      = AU::get($data['sid']);
-        $this->sale_amount              = AU::get($data['sale-amount']);
-        $this->event_date               = AU::get($data['event-date']);
-        $this->locking_date             = AU::get($data['locking-date']);
-        $this->posting_date             = AU::get($data['posting-date']);
+        $this->action_status            = AU::getUnset($data, 'action-status');
+        $this->action_type              = AU::getUnset($data, 'action-type');
+        $this->aid                      = AU::getUnset($data, 'aid');
+        $this->commission_id            = AU::getUnset($data, 'commission-id');
+        $this->country                  = AU::getUnset($data, 'country');
+        $this->order_id                 = AU::getUnset($data, 'order-id');
+        $this->original                 = AU::getUnset($data, 'original');
+        $this->original_action_id       = AU::getUnset($data, 'original-action-id');
+        $this->website_id               = AU::getUnset($data, 'website-id');
+        $this->action_tracker_id        = AU::getUnset($data, 'action-tracker-id');
+        $this->action_tracker_name      = AU::getUnset($data, 'action-tracker-name');
+        $this->cid                      = AU::getUnset($data, 'cid');
+        $this->advertiser_name          = AU::getUnset($data, 'advertiser-name');
+        $this->commission_amount        = AU::getUnset($data, 'commission-amount');
+        $this->order_discount           = AU::getUnset($data, 'order-discount');
+        $this->sid                      = AU::getUnset($data, 'sid');
+        $this->sale_amount              = AU::getUnset($data, 'sale-amount');
+        $this->event_date               = AU::getUnset($data, 'event-date');
+        $this->locking_date             = AU::getUnset($data, 'locking-date');
+        $this->posting_date             = AU::getUnset($data, 'posting-date');
+        $this->is_cross_device          = AU::getUnset($data, 'is-cross-device');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()
@@ -322,4 +331,13 @@ class Commission implements \JsonSerializable
     {
         return $this->posting_date;
     }
+
+    /**
+     * @return string
+     */
+    public function getIsCrossDevice()
+    {
+        return $this->is_cross_device;
+    }
+
 }

@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\PepperJam\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class TransactionSummary implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -80,19 +81,21 @@ class TransactionSummary implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->sale_revenue             = AU::get($data['sale_revenue']);
-        $this->impression_count         = AU::get($data['impression_count']);
-        $this->click_count              = AU::get($data['click_count']);
-        $this->click_through_rate       = AU::get($data['click_through_rate']);
-        $this->conversion_rate          = AU::get($data['conversion_rate']);
-        $this->earnings_per_click       = AU::get($data['earnings_per_click']);
-        $this->sale_count               = AU::get($data['sale_count']);
-        $this->total_sale_commission    = AU::get($data['total_sale_commission']);
-        $this->lead_count               = AU::get($data['lead_count']);
-        $this->total_lead_commission    = AU::get($data['total_lead_commission']);
-        $this->bonus_affiliate_commission= AU::get($data['bonus_affiliate_commission']);
-        $this->total_commission         = AU::get($data['total_commission']);
-        $this->program_name             = AU::get($data['program_name']);
+        $this->sale_revenue             = AU::getUnset($data, 'sale_revenue');
+        $this->impression_count         = AU::getUnset($data, 'impression_count');
+        $this->click_count              = AU::getUnset($data, 'click_count');
+        $this->click_through_rate       = AU::getUnset($data, 'click_through_rate');
+        $this->conversion_rate          = AU::getUnset($data, 'conversion_rate');
+        $this->earnings_per_click       = AU::getUnset($data, 'earnings_per_click');
+        $this->sale_count               = AU::getUnset($data, 'sale_count');
+        $this->total_sale_commission    = AU::getUnset($data, 'total_sale_commission');
+        $this->lead_count               = AU::getUnset($data, 'lead_count');
+        $this->total_lead_commission    = AU::getUnset($data, 'total_lead_commission');
+        $this->bonus_affiliate_commission= AU::getUnset($data, 'bonus_affiliate_commission');
+        $this->total_commission         = AU::getUnset($data, 'total_commission');
+        $this->program_name             = AU::getUnset($data, 'program_name');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

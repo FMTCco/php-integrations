@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\ImpactRadius\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Campaign implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
     /**
      * @var int
@@ -94,23 +95,25 @@ class Campaign implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->AdvertiserId             = AU::get($data['AdvertiserId']);
-        $this->AdvertiserName           = AU::get($data['AdvertiserName']);
-        $this->AdvertiserUrl            = AU::get($data['AdvertiserUrl']);
-        $this->CampaignId               = AU::get($data['CampaignId']);
-        $this->CampaignName             = AU::get($data['CampaignName']);
-        $this->CampaignUrl              = AU::get($data['CampaignUrl']);
-        $this->CampaignDescription      = AU::get($data['CampaignDescription']);
-        $this->ShippingRegions          = AU::get($data['ShippingRegions']);
-        $this->CampaignLogoUri          = AU::get($data['CampaignLogoUri']);
-        $this->PublicInsertionOrderUri  = AU::get($data['PublicInsertionOrderUri']);
-        $this->InsertionOrderStatus     = AU::get($data['InsertionOrderStatus']);
-        $this->InsertionOrderUri        = AU::get($data['InsertionOrderUri']);
-        $this->TrackingLink             = AU::get($data['TrackingLink']);
-        $this->AllowsDeeplinking        = AU::get($data['AllowsDeeplinking']);
-        $this->DeeplinkDomains          = AU::get($data['DeeplinkDomains']);
-        $this->Uri                      = AU::get($data['Uri']);
-        $this->InsertionOrderStatus     = AU::get($data['InsertionOrderStatus']);
+        $this->AdvertiserId             = AU::getUnset($data, 'AdvertiserId');
+        $this->AdvertiserName           = AU::getUnset($data, 'AdvertiserName');
+        $this->AdvertiserUrl            = AU::getUnset($data, 'AdvertiserUrl');
+        $this->CampaignId               = AU::getUnset($data, 'CampaignId');
+        $this->CampaignName             = AU::getUnset($data, 'CampaignName');
+        $this->CampaignUrl              = AU::getUnset($data, 'CampaignUrl');
+        $this->CampaignDescription      = AU::getUnset($data, 'CampaignDescription');
+        $this->ShippingRegions          = AU::getUnset($data, 'ShippingRegions');
+        $this->CampaignLogoUri          = AU::getUnset($data, 'CampaignLogoUri');
+        $this->PublicInsertionOrderUri  = AU::getUnset($data, 'PublicInsertionOrderUri');
+        $this->InsertionOrderStatus     = AU::getUnset($data, 'InsertionOrderStatus');
+        $this->InsertionOrderUri        = AU::getUnset($data, 'InsertionOrderUri');
+        $this->TrackingLink             = AU::getUnset($data, 'TrackingLink');
+        $this->AllowsDeeplinking        = AU::getUnset($data, 'AllowsDeeplinking');
+        $this->DeeplinkDomains          = AU::getUnset($data, 'DeeplinkDomains');
+        $this->Uri                      = AU::getUnset($data, 'Uri');
+        $this->InsertionOrderStatus     = AU::getUnset($data, 'InsertionOrderStatus');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

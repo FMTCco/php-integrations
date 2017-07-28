@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\ShareASale\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class VoidTrail implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -45,12 +46,14 @@ class VoidTrail implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->transid                  = AU::get($data['transid']);
-        $this->voiddate                 = AU::get($data['voiddate']);
-        $this->voidreason               = AU::get($data['voidreason']);
-        $this->transamount              = AU::get($data['transamount']);
-        $this->commission               = AU::get($data['commission']);
-        $this->affcomment               = AU::get($data['affcomment']);
+        $this->transid                  = AU::getUnset($data, 'transid');
+        $this->voiddate                 = AU::getUnset($data, 'voiddate');
+        $this->voidreason               = AU::getUnset($data, 'voidreason');
+        $this->transamount              = AU::getUnset($data, 'transamount');
+        $this->commission               = AU::getUnset($data, 'commission');
+        $this->affcomment               = AU::getUnset($data, 'affcomment');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

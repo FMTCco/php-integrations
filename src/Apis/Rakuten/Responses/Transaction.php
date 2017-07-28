@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\Rakuten\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Transaction implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -69,16 +70,18 @@ class Transaction implements \JsonSerializable
      */
     public function __construct($data = [])
     {
-        $this->Order_Id                 = AU::get($data['Order ID']);
-        $this->Transaction_Date         = AU::get($data['Transaction Date']);
-        $this->Transaction_Time         = AU::get($data['Transaction Time']);
-        $this->MID                      = AU::get($data['MID']);
-        $this->Advertiser_Name          = AU::get($data['Advertiser Name']);
-        $this->SKU                      = AU::get($data['SKU']);
-        $this->Product_Name             = AU::get($data['Product Name']);
-        $this->Sales                    = AU::get($data['Sales']);
-        $this->Num_Of_Items             = AU::get($data['# of Items']);
-        $this->Total_Commission         = AU::get($data['Total Commission']);
+        $this->Order_Id                 = AU::getUnset($data, 'Order ID');
+        $this->Transaction_Date         = AU::getUnset($data, 'Transaction Date');
+        $this->Transaction_Time         = AU::getUnset($data, 'Transaction Time');
+        $this->MID                      = AU::getUnset($data, 'MID');
+        $this->Advertiser_Name          = AU::getUnset($data, 'Advertiser Name');
+        $this->SKU                      = AU::getUnset($data, 'SKU');
+        $this->Product_Name             = AU::getUnset($data, 'Product Name');
+        $this->Sales                    = AU::getUnset($data, 'Sales');
+        $this->Num_Of_Items             = AU::getUnset($data, '# of Items');
+        $this->Total_Commission         = AU::getUnset($data, 'Total Commission');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     /**

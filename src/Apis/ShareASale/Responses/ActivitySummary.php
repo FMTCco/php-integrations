@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\ShareASale\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class ActivitySummary implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -155,34 +156,36 @@ class ActivitySummary implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->merchantid               = AU::get($data['merchantid']);
-        $this->merchant                 = AU::get($data['merchant']);
-        $this->commissionsmonth         = AU::get($data['commissionsmonth']);
-        $this->commissionstotal         = AU::get($data['commissionstotal']);
-        $this->hitsmonth                = AU::get($data['hitsmonth']);
-        $this->hitstotal                = AU::get($data['hitstotal']);
-        $this->salesmonth               = AU::get($data['salesmonth']);
-        $this->salestotal               = AU::get($data['salestotal']);
-        $this->conversionmonth          = AU::get($data['conversionmonth']);
-        $this->conversiontotal          = AU::get($data['conversiontotal']);
-        $this->epcmonth                 = AU::get($data['epcmonth']);
-        $this->epctotal                 = AU::get($data['epctotal']);
-        $this->merchantstatus           = AU::get($data['merchantstatus']);
-        $this->salecomm                 = AU::get($data['salecomm.']);
-        $this->leadcomm                 = AU::get($data['leadcomm.']);
-        $this->hitcomm                  = AU::get($data['hitcomm.']);
-        $this->numberofsalesmonth       = AU::get($data['numberofsalesmonth']);
-        $this->commissionssalesmonth    = AU::get($data['commissionssalesmonth']);
-        $this->numberofleadsmonth       = AU::get($data['numberofleadsmonth']);
-        $this->commissionsleadsmonth    = AU::get($data['commissionsleadsmonth']);
-        $this->numberoftwotiermonth     = AU::get($data['numberoftwotiermonth']);
-        $this->commissionstwotiermonth  = AU::get($data['commissionstwotiermonth']);
-        $this->numberofbonusesmonth     = AU::get($data['numberofbonusesmonth']);
-        $this->commissionsbonusmonth    = AU::get($data['commissionsbonusmonth']);
-        $this->numberofppcallsmonth     = AU::get($data['numberofppcallsmonth']);
-        $this->commissionsppcallmonth   = AU::get($data['commissionsppcallmonth']);
-        $this->numberofleapfrogsmonth   = AU::get($data['numberofleapfrogsmonth']);
-        $this->commissionsleapfrogmonth = AU::get($data['commissionsleapfrogmonth']);
+        $this->merchantid               = AU::getUnset($data, 'merchantid');
+        $this->merchant                 = AU::getUnset($data, 'merchant');
+        $this->commissionsmonth         = AU::getUnset($data, 'commissionsmonth');
+        $this->commissionstotal         = AU::getUnset($data, 'commissionstotal');
+        $this->hitsmonth                = AU::getUnset($data, 'hitsmonth');
+        $this->hitstotal                = AU::getUnset($data, 'hitstotal');
+        $this->salesmonth               = AU::getUnset($data, 'salesmonth');
+        $this->salestotal               = AU::getUnset($data, 'salestotal');
+        $this->conversionmonth          = AU::getUnset($data, 'conversionmonth');
+        $this->conversiontotal          = AU::getUnset($data, 'conversiontotal');
+        $this->epcmonth                 = AU::getUnset($data, 'epcmonth');
+        $this->epctotal                 = AU::getUnset($data, 'epctotal');
+        $this->merchantstatus           = AU::getUnset($data, 'merchantstatus');
+        $this->salecomm                 = AU::getUnset($data, 'salecomm.');
+        $this->leadcomm                 = AU::getUnset($data, 'leadcomm.');
+        $this->hitcomm                  = AU::getUnset($data, 'hitcomm.');
+        $this->numberofsalesmonth       = AU::getUnset($data, 'numberofsalesmonth');
+        $this->commissionssalesmonth    = AU::getUnset($data, 'commissionssalesmonth');
+        $this->numberofleadsmonth       = AU::getUnset($data, 'numberofleadsmonth');
+        $this->commissionsleadsmonth    = AU::getUnset($data, 'commissionsleadsmonth');
+        $this->numberoftwotiermonth     = AU::getUnset($data, 'numberoftwotiermonth');
+        $this->commissionstwotiermonth  = AU::getUnset($data, 'commissionstwotiermonth');
+        $this->numberofbonusesmonth     = AU::getUnset($data, 'numberofbonusesmonth');
+        $this->commissionsbonusmonth    = AU::getUnset($data, 'commissionsbonusmonth');
+        $this->numberofppcallsmonth     = AU::getUnset($data, 'numberofppcallsmonth');
+        $this->commissionsppcallmonth   = AU::getUnset($data, 'commissionsppcallmonth');
+        $this->numberofleapfrogsmonth   = AU::getUnset($data, 'numberofleapfrogsmonth');
+        $this->commissionsleapfrogmonth = AU::getUnset($data, 'commissionsleapfrogmonth');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

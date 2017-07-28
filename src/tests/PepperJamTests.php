@@ -3,7 +3,9 @@
 namespace FMTCco\Integrations\Tests;
 
 
+use Dotenv\Dotenv;
 use FMTCco\Integrations\Apis\PepperJam\PepperJamApi;
+use FMTCco\Integrations\Apis\PepperJam\Requests\GetTransactionDetails;
 
 class PepperJamTests extends \PHPUnit_Framework_TestCase
 {
@@ -13,6 +15,25 @@ class PepperJamTests extends \PHPUnit_Framework_TestCase
         $api                        = $this->getApi();
         if (is_null($api))
             return;
+
+        $request                    = new GetTransactionDetails();
+        $request->setStartDate('2017-01-01');
+        $request->setEndDate('2017-07-01');
+        $request->setIncludeCoupons(true);
+        $request->setDeviceType(true);
+
+        $response                   = $api->getTransactionDetails($request);
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\TransactionDetailResponse::class, $response);
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Pagination::class, $response->getPagination());
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Status::class, $response->getStatus());
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Requests::class, $response->getRequests());
+
+        foreach ($response->getData() AS $transactionDetail)
+        {
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\TransactionDetail::class, $transactionDetail);
+            $this->assertEmpty($transactionDetail->getUnmappedVariables());
+        }
+
     }
 
     /**
@@ -20,6 +41,9 @@ class PepperJamTests extends \PHPUnit_Framework_TestCase
      */
     private function getApi ()
     {
+        $dotEnv                     = new Dotenv('./');
+        $dotEnv->load();
+
         $api_key                    = getenv('PEPPER_JAM_API_KEY');
 
         if (is_null($api_key))

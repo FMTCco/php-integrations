@@ -3,8 +3,13 @@
 namespace FMTCco\Integrations\Apis\ShareASale\Requests;
 
 
+use FMTCco\Integrations\Traits\SimpleSerializable;
+
 class GetActivitySummary implements \JsonSerializable
 {
+
+    use SimpleSerializable;
+
 
     /**
      * Merchant Id Value
@@ -57,23 +62,6 @@ class GetActivitySummary implements \JsonSerializable
      */
     protected $format                       = 'xml';
 
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $object['merchantId']               = $this->merchantId;
-        $object['filterCol']                = $this->filterCol;
-        $object['filterSpan']               = $this->filterSpan;
-        $object['filterValue']              = $this->filterValue;
-        $object['sortCol']                  = $this->sortCol;
-        $object['sortDir']                  = $this->sortDir;
-        $object['XMLFormat']                = $this->XMLFormat;
-        $object['format']                   = $this->format;
-
-        return $object;
-    }
 
     /**
      * @return int|null

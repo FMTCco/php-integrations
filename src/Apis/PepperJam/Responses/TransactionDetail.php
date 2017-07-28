@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\PepperJam\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class TransactionDetail implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -90,21 +91,23 @@ class TransactionDetail implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->transaction_id           = AU::get($data['transaction_id']);
-        $this->order_id                 = AU::get($data['order_id']);
-        $this->creative_type            = AU::get($data['creative_type']);
-        $this->commission               = AU::get($data['commission']);
-        $this->sale_amount              = AU::get($data['sale_amount']);
-        $this->type                     = AU::get($data['type']);
-        $this->date                     = AU::get($data['date']);
-        $this->status                   = AU::get($data['status']);
-        $this->new_to_file              = AU::get($data['new_to_file']);
-        $this->sub_type                 = AU::get($data['sub_type']);
-        $this->sid                      = AU::get($data['sid']);
-        $this->program_name             = AU::get($data['program_name']);
-        $this->program_id               = AU::get($data['program_id']);
-        $this->device_type              = AU::get($data['device_type']);
-        $this->coupons                  = AU::get($data['coupons']);
+        $this->transaction_id           = AU::getUnset($data, 'transaction_id');
+        $this->order_id                 = AU::getUnset($data, 'order_id');
+        $this->creative_type            = AU::getUnset($data, 'creative_type');
+        $this->commission               = AU::getUnset($data, 'commission');
+        $this->sale_amount              = AU::getUnset($data, 'sale_amount');
+        $this->type                     = AU::getUnset($data, 'type');
+        $this->date                     = AU::getUnset($data, 'date');
+        $this->status                   = AU::getUnset($data, 'status');
+        $this->new_to_file              = AU::getUnset($data, 'new_to_file');
+        $this->sub_type                 = AU::getUnset($data, 'sub_type');
+        $this->sid                      = AU::getUnset($data, 'sid');
+        $this->program_name             = AU::getUnset($data, 'program_name');
+        $this->program_id               = AU::getUnset($data, 'program_id');
+        $this->device_type              = AU::getUnset($data, 'device_type');
+        $this->coupons                  = AU::getUnset($data, 'coupons');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

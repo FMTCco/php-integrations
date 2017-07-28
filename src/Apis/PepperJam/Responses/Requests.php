@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\PepperJam\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Requests implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -25,8 +26,10 @@ class Requests implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->current                  = AU::get($data['current']);
-        $this->maximum                  = AU::get($data['maximum']);
+        $this->current                  = AU::getUnset($data, 'current');
+        $this->maximum                  = AU::getUnset($data, 'maximum');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\ImpactRadius\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class GetActionsResponse implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
     /**
      * @var int
@@ -74,26 +75,30 @@ class GetActionsResponse implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->page                     = AU::get($data['@page']);
-        $this->numpages                 = AU::get($data['@numpages']);
-        $this->pagesize                 = AU::get($data['@pagesize']);
-        $this->total                    = AU::get($data['@total']);
-        $this->start                    = AU::get($data['@start']);
-        $this->end                      = AU::get($data['@end']);
-        $this->uri                      = AU::get($data['@uri']);
-        $this->firstpageuri             = AU::get($data['@firstpageuri']);
-        $this->previouspageuri          = AU::get($data['@previouspageuri']);
-        $this->nextpageuri              = AU::get($data['@nextpageuri']);
-        $this->lastpageuri              = AU::get($data['@lastpageuri']);
-        $this->end                      = AU::get($data['@end']);
+        $this->page                     = AU::getUnset($data, '@page');
+        $this->numpages                 = AU::getUnset($data, '@numpages');
+        $this->pagesize                 = AU::getUnset($data, '@pagesize');
+        $this->total                    = AU::getUnset($data, '@total');
+        $this->start                    = AU::getUnset($data, '@start');
+        $this->end                      = AU::getUnset($data, '@end');
+        $this->uri                      = AU::getUnset($data, '@uri');
+        $this->firstpageuri             = AU::getUnset($data, '@firstpageuri');
+        $this->previouspageuri          = AU::getUnset($data, '@previouspageuri');
+        $this->nextpageuri              = AU::getUnset($data, '@nextpageuri');
+        $this->lastpageuri              = AU::getUnset($data, '@lastpageuri');
+        $this->end                      = AU::getUnset($data, '@end');
 
         $this->data                     = [];
         if (isset($data['Action'])) {
             $this->data                 = $data['Action'];
+            unset($data['Action']);
         }
         if (isset($data['Actions'])) {
             $this->data                 = $data['Actions'];
+            unset($data['Actions']);
         }
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

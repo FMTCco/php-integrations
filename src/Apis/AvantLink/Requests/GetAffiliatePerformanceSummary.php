@@ -3,8 +3,13 @@
 namespace FMTCco\Integrations\Apis\AvantLink\Requests;
 
 
+use FMTCco\Integrations\Traits\SimpleSerializable;
+
 class GetAffiliatePerformanceSummary implements \JsonSerializable
 {
+
+    use SimpleSerializable;
+
 
     /**
      * A custom string to be appended to AvantLink click-through URLs.
@@ -78,25 +83,6 @@ class GetAffiliatePerformanceSummary implements \JsonSerializable
      */
     protected $website_id;
 
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $object['custom_tracking_code']     = $this->custom_tracking_code;
-        $object['date_begin']               = $this->date_begin;
-        $object['date_end']                 = $this->date_end;
-        $object['date_range']               = $this->date_range;
-        $object['include_inactive_merchants']= $this->include_inactive_merchants;
-        $object['merchant_group_id']        = $this->merchant_group_id;
-        $object['merchant_id']              = $this->merchant_id;
-        $object['tool_type']                = $this->tool_type;
-        $object['transaction_id']           = $this->transaction_id;
-        $object['website_id']               = $this->website_id;
-
-        return $object;
-    }
 
     /**
      * @return null|string

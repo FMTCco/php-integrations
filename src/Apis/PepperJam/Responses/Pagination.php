@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\PepperJam\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Pagination implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -25,8 +26,10 @@ class Pagination implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->total_results            = AU::get($data['total_results']);
-        $this->total_pages              = AU::get($data['total_pages']);
+        $this->total_results            = AU::getUnset($data, 'total_results');
+        $this->total_pages              = AU::getUnset($data, 'total_pages');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

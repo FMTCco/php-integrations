@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\PepperJam\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Status implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -25,8 +26,10 @@ class Status implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->code                     = AU::get($data['code']);
-        $this->message                  = AU::get($data['message']);
+        $this->code                     = AU::getUnset($data, 'code');
+        $this->message                  = AU::getUnset($data, 'message');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     public function clean()

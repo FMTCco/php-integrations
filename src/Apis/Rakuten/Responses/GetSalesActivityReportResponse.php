@@ -19,6 +19,8 @@ class GetSalesActivityReportResponse implements \JsonSerializable
 
     public function __construct($data = [])
     {
+        $this->data                     = [];
+
         foreach ($data as $item) {
             $this->data[]               = new SalesActivityReport($item);
         }

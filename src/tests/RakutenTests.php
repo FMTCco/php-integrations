@@ -3,6 +3,7 @@
 namespace FMTCco\Integrations\Tests;
 
 
+use Dotenv\Dotenv;
 use FMTCco\Integrations\Apis\Rakuten\RakutenApi;
 
 class RakutenTests extends \PHPUnit_Framework_TestCase
@@ -20,6 +21,9 @@ class RakutenTests extends \PHPUnit_Framework_TestCase
      */
     private function getApi ()
     {
+        $dotEnv                     = new Dotenv('./');
+        $dotEnv->load();
+
         $token                      = getenv('RAKUTEN_TOKEN');
 
         if (is_null($token))

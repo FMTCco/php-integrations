@@ -4,12 +4,13 @@ namespace FMTCco\Integrations\Apis\Skimlinks\Responses;
 
 
 use FMTCco\Integrations\Traits\SimpleSerializable;
+use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
 class Pagination implements \JsonSerializable
 {
 
-    use SimpleSerializable;
+    use SimpleSerializable, UnmappedVariables;
 
 
     /**
@@ -30,9 +31,11 @@ class Pagination implements \JsonSerializable
 
     public function __construct($data = [])
     {
-        $this->total                    = AU::get($data['total']);
-        $this->from                     = AU::get($data['from']);
-        $this->itemCount                = AU::get($data['itemCount']);
+        $this->total                    = AU::getUnset($data, 'total');
+        $this->from                     = AU::getUnset($data, 'from');
+        $this->itemCount                = AU::getUnset($data, 'itemCount');
+
+        $this->setUnmappedVariablesFromResponse($data);
     }
 
     /**

@@ -3,8 +3,13 @@
 namespace FMTCco\Integrations\Apis\PepperJam\Requests;
 
 
+use FMTCco\Integrations\Traits\SimpleSerializable;
+
 class GetTransactionDetails implements \JsonSerializable
 {
+
+    use SimpleSerializable;
+
 
     /**
      * Formatted as yyyy-mm-dd
@@ -63,22 +68,6 @@ class GetTransactionDetails implements \JsonSerializable
      */
     protected $removeCsvHeaders;
 
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $object['startDate']                = $this->startDate;
-        $object['endDate']                  = $this->endDate;
-        $object['website']                  = $this->website;
-        $object['includeCoupons']           = $this->includeCoupons;
-        $object['deviceType']               = $this->deviceType;
-        $object['newToFile']                = $this->newToFile;
-        $object['removeCsvHeaders']         = $this->removeCsvHeaders;
-
-        return $object;
-    }
 
     /**
      * @return string
