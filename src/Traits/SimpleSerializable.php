@@ -19,8 +19,15 @@ trait SimpleSerializable
     private function simpleSerialize()
     {
         $data               = get_object_vars($this);
-        if (isset($data['unmappedVariables']))
-            unset($data['unmappedVariables']);
+        $key_set            = array_keys($data);
+
+        foreach ($key_set AS $key)
+        {
+            //  Mappings aren't working for these for some reason...
+            if (preg_match("/unmappedvariables/", strtolower($key)))
+                unset($data[$key]);
+        }
+
         return $data;
     }
 }
