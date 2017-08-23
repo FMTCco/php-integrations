@@ -5,6 +5,7 @@ namespace FMTCco\Integrations\Tests;
 
 use Dotenv\Dotenv;
 use FMTCco\Integrations\Apis\AvantLink\AvantLinkApi;
+use FMTCco\Integrations\Apis\AvantLink\Requests\GetAssociationFeed;
 use FMTCco\Integrations\Apis\AvantLink\Requests\GetSalesCommissionsDetails;
 
 class AvantLinkTests extends \PHPUnit_Framework_TestCase
@@ -15,6 +16,18 @@ class AvantLinkTests extends \PHPUnit_Framework_TestCase
         $api                        = $this->getApi();
         if (is_null($api))
             return;
+
+
+        $request                    = new GetAssociationFeed();
+        $request->setAssociationStatus('active');
+        $response                   = $api->getAssociationFeed($request);
+
+        foreach ($response AS $associationFeed)
+        {
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AvantLink\Responses\AssociationFeed::class, $associationFeed);
+            $this->assertEmpty($associationFeed->getUnmappedVariables());
+        }
+
 
         $request                    = new GetSalesCommissionsDetails();
         $request->setDateBegin('2016-01-01 00:00:00');

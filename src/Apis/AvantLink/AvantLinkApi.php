@@ -4,8 +4,10 @@ namespace FMTCco\Integrations\Apis\AvantLink;
 
 
 use FMTCco\Integrations\Apis\AvantLink\Requests\GetAffiliatePerformanceSummary;
+use FMTCco\Integrations\Apis\AvantLink\Requests\GetAssociationFeed;
 use FMTCco\Integrations\Apis\AvantLink\Requests\GetSalesCommissionsDetails;
 use FMTCco\Integrations\Apis\AvantLink\Responses\AffiliatePerformanceSummaryResponse;
+use FMTCco\Integrations\Apis\AvantLink\Responses\AssociationFeed;
 use FMTCco\Integrations\Apis\AvantLink\Responses\SaleCommissionDetailResponse;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
 use FMTCco\Integrations\Exceptions\InvalidNetworkDateRangeException;
@@ -50,6 +52,24 @@ class AvantLinkApi
         $this->auth_key             = $auth_key;
         $this->output               = $output;
         $this->client               = new Client();
+    }
+
+    /**
+     * @param   GetAssociationFeed|array $request
+     * @return  AssociationFeed[]
+     */
+    public function getAssociationFeed ($request = [])
+    {
+        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
+        $result                     = $this->makeHttpRequest('GET', 'AssociationFeed', $request);
+
+        $associationFeeds           = [];
+        foreach ($result['Table1'] AS $item)
+        {
+            $associationFeeds[]     = new AssociationFeed($item);
+        }
+
+        return $associationFeeds;
     }
 
     /**
