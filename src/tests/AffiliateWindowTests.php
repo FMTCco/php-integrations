@@ -5,6 +5,7 @@ namespace FMTCco\Integrations\Tests;
 
 use Dotenv\Dotenv;
 use FMTCco\Integrations\Apis\AffiliateWindow\AffiliateWindowApi;
+use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetClickStats;
 
 class AffiliateWindowTests extends \PHPUnit_Framework_TestCase
 {
@@ -15,6 +16,24 @@ class AffiliateWindowTests extends \PHPUnit_Framework_TestCase
         if (is_null($api))
             return;
 
+        $request                    = new GetClickStats();
+        $request->setDStartDate(date('c', time()-(60*60*24*30)));
+        $request->setDEndDate(date('c'));
+
+        $response                   = $api->getClickStats($request);
+
+        foreach ($response AS $clickStat)
+        {
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AffiliateWindow\Responses\ClickStat::class, $clickStat);
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AffiliateWindow\Responses\Value::class, $clickStat->getMPendingValue());
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AffiliateWindow\Responses\Value::class, $clickStat->getMPendingCommission());
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AffiliateWindow\Responses\Value::class, $clickStat->getMConfirmedValue());
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AffiliateWindow\Responses\Value::class, $clickStat->getMConfirmedCommission());
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AffiliateWindow\Responses\Value::class, $clickStat->getMDeclinedValue());
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\AffiliateWindow\Responses\Value::class, $clickStat->getMDeclinedCommission());
+        }
+
+
         $response                   = $api->getMerchantList();
 
         foreach ($response AS $merchant)
@@ -24,6 +43,7 @@ class AffiliateWindowTests extends \PHPUnit_Framework_TestCase
             $this->assertEmpty($merchant->getUnmappedVariables());
             $this->assertEmpty($merchant->getOPrimaryRegion()->getUnmappedVariables());
         }
+
     }
 
 
