@@ -7,6 +7,8 @@ use FMTCco\Integrations\Apis\LinkConnector\Requests\GetApprovedCampaigns;
 use FMTCco\Integrations\Apis\LinkConnector\Requests\GetReportAccountBalance;
 use FMTCco\Integrations\Apis\LinkConnector\Responses\AccountBalance;
 use FMTCco\Integrations\Apis\LinkConnector\Responses\Campaign;
+use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
+use FMTCco\Integrations\Exceptions\InvalidNetworkResourceException;
 use \GuzzleHttp\Client;
 
 class LinkConnectorApi
@@ -74,8 +76,16 @@ class LinkConnectorApi
         return $balances;
     }
 
-
-    public function makeHttpRequest($method, $resource, $query = [], $format = 'JSON')
+    /**
+     * @param   string      $method
+     * @param   string      $resource
+     * @param   array       $request
+     * @param   string      $format
+     * @return  array
+     * @throws  InvalidNetworkCredentialsException
+     * @throws  InvalidNetworkResourceException
+     */
+    public function makeHttpRequest($method, $resource, $request = [], $format = 'JSON')
     {
         $response                   = $this->client->request($method, '', [
             'form_params' => [
@@ -84,6 +94,13 @@ class LinkConnectorApi
                 'Format'        => $format,
             ]
         ]);
-        return json_decode($response->getBody(), true);
+
+        $data                   = $response->getBody()->getContents();
+        if ($data == 'Unable to complete request: Invalid API Key')
+            throw new InvalidNetworkCredentialsException('Invalid LinkConnector API key');
+        else if ($data == 'Unable to complete request: Unsupported Function')
+            throw new InvalidNetworkResourceException('Unsupported LinkConnector Function');
+
+        return json_decode($data, true);
     }
 }
