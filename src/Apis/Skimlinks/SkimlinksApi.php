@@ -123,7 +123,6 @@ class SkimlinksApi
         catch (ClientException $exception) {
             $code                   = $exception->getCode();
             $message                = $exception->getResponse()->getBody()->getContents();
-            dd($message);
             throw new UnknownNetworkException($exception->getMessage());
         }
     }
