@@ -5,12 +5,15 @@ namespace FMTCco\Integrations\Apis\ShareASale;
 
 use FMTCco\Integrations\Apis\ShareASale\Requests\GetActivity;
 use FMTCco\Integrations\Apis\ShareASale\Requests\GetActivitySummary;
+use FMTCco\Integrations\Apis\ShareASale\Requests\GetBalance;
 use FMTCco\Integrations\Apis\ShareASale\Requests\GetEditTrail;
+use FMTCco\Integrations\Apis\ShareASale\Requests\GetMerchantStatus;
 use FMTCco\Integrations\Apis\ShareASale\Requests\GetVoidTrail;
 use FMTCco\Integrations\Apis\ShareASale\Responses\ActivitySummaryResponse;
 use FMTCco\Integrations\Apis\ShareASale\Responses\GetActivityResponse;
 use FMTCco\Integrations\Apis\ShareASale\Responses\GetEditTrailResponse;
 use FMTCco\Integrations\Apis\ShareASale\Responses\GetVoidTrailResponse;
+use FMTCco\Integrations\Apis\ShareASale\Responses\MerchantStatus;
 use FMTCco\Integrations\Exceptions\InsufficientNetworkPermissionsException;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
 use FMTCco\Integrations\Exceptions\InvalidNetworkDateRangeException;
@@ -67,6 +70,37 @@ class ShareASaleApi
         $this->secret_key           = $secret_key;
         $this->version              = $version;
         $this->client               = new Client();
+    }
+
+
+    /**
+     * @param   GetMerchantStatus|array $request
+     * @return  MerchantStatus[]
+     */
+    public function getMerchantStatus ($request = [])
+    {
+        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
+        $result                     = $this->makeHttpRequest('GET', 'merchantStatus', $request);
+
+        $response                   = [];
+        foreach ($result['merchantstatusreportrecord'] AS $item)
+        {
+            $response[]             = new MerchantStatus($item);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param   GetBalance|array $request
+     * @return  int
+     */
+    public function getBalance ($request = [])
+    {
+        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
+        $result                     = $this->makeHttpRequest('GET', 'balance', $request);
+
+        return $result['balanceInquiryrecord']['balance'];
     }
 
     /**
@@ -157,29 +191,27 @@ class ShareASaleApi
 
             $contents               = $response->getBody()->getContents();
             $contents               = str_replace([PHP_EOL, "\r", "\t"], '', $contents);
-            try {
-                $response_xml       = new \SimpleXMLElement($contents);
-                $response_array     = json_decode(json_encode($response_xml), true);
-                return $response_array;
-            } catch (\Exception $exception) {
-                if (preg_match("/Error Code 4001/", $contents)) {
-                    throw new InvalidNetworkCredentialsException('Share A Sale credentials is missing affiliateId');
-                } else if (preg_match("/Error Code 4002/", $contents)) {
-                    throw new InvalidNetworkCredentialsException('Invalid Share A Sale account');
-                } else if (preg_match("/Error Code 4075/", $contents)) {
-                    throw new InvalidNetworkCredentialsException('Invalid Share A Sale credentials');
-                } else if (preg_match("/Error Code 4030/", $contents)) {
-                    throw new RequiredNetworkFieldMissingException('A required input is missing');
-                } else if (preg_match("/Invalid Permissions/", $contents)) {
-                    throw new InsufficientNetworkPermissionsException();
-                } else if (preg_match("/Error Code 4040/", $contents)) {
-                    throw new InvalidNetworkDateRangeException('Date Span too great');
-                } else {
-                    throw new UnknownNetworkException($contents);
-                }
+            $response_xml           = new \SimpleXMLElement($contents);
+            $response_array         = json_decode(json_encode($response_xml), true);
+            return $response_array;
+        }
+        catch (\Exception $exception)
+        {
+            if (preg_match("/Error Code 4001/", $contents)) {
+                throw new InvalidNetworkCredentialsException('Share A Sale credentials is missing affiliateId');
+            } else if (preg_match("/Error Code 4002/", $contents)) {
+                throw new InvalidNetworkCredentialsException('Invalid Share A Sale account');
+            } else if (preg_match("/Error Code 4075/", $contents)) {
+                throw new InvalidNetworkCredentialsException('Invalid Share A Sale credentials');
+            } else if (preg_match("/Error Code 4030/", $contents)) {
+                throw new RequiredNetworkFieldMissingException('A required input is missing');
+            } else if (preg_match("/Invalid Permissions/", $contents)) {
+                throw new InsufficientNetworkPermissionsException();
+            } else if (preg_match("/Error Code 4040/", $contents)) {
+                throw new InvalidNetworkDateRangeException('Date Span too great');
+            } else {
+                throw new UnknownNetworkException($contents);
             }
-        } catch (ClientException $exception) {
-            throw new UnknownNetworkException($exception->getMessage());
         }
     }
 }

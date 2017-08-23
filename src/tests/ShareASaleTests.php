@@ -5,6 +5,8 @@ namespace FMTCco\Integrations\Tests;
 
 use Dotenv\Dotenv;
 use FMTCco\Integrations\Apis\ShareASale\Requests\GetActivity;
+use FMTCco\Integrations\Apis\ShareASale\Requests\GetBalance;
+use FMTCco\Integrations\Apis\ShareASale\Requests\GetMerchantStatus;
 use FMTCco\Integrations\Apis\ShareASale\ShareASaleApi;
 
 class ShareASaleTests extends \PHPUnit_Framework_TestCase
@@ -15,6 +17,18 @@ class ShareASaleTests extends \PHPUnit_Framework_TestCase
         $api                        = $this->getApi();
         if (is_null($api))
             return;
+
+
+        $request                    = new GetBalance();
+        $result                     = $api->getBalance($request);
+
+
+        $request                    = new GetMerchantStatus();
+        $response                   = $api->getMerchantStatus($request);
+        foreach ($response AS $merchantStatus)
+        {
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\ShareASale\Responses\MerchantStatus::class, $merchantStatus);
+        }
 
         $request                    = new GetActivity();
         $request->setDateStart('05/01/2017');
