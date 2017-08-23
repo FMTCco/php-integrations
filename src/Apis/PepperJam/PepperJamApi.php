@@ -3,8 +3,10 @@
 namespace FMTCco\Integrations\Apis\PepperJam;
 
 
+use FMTCco\Integrations\Apis\PepperJam\Requests\GetAdvertisers;
 use FMTCco\Integrations\Apis\PepperJam\Requests\GetTransactionDetails;
 use FMTCco\Integrations\Apis\PepperJam\Requests\GetTransactionSummary;
+use FMTCco\Integrations\Apis\PepperJam\Responses\AdvertisersResponse;
 use FMTCco\Integrations\Apis\PepperJam\Responses\TransactionDetailResponse;
 use FMTCco\Integrations\Apis\PepperJam\Responses\TransactionSummaryResponse;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
@@ -57,6 +59,19 @@ class PepperJamApi
         $this->format               = $format;
         $this->version              = $version;
         $this->client               = new Client();
+    }
+
+    /**
+     * @param   GetAdvertisers|array $request
+     * @return  AdvertisersResponse
+     */
+    public function getAdvertisers ($request = [])
+    {
+        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
+        $result                     = $this->makeHttpRequest('GET', 'publisher/advertiser', $request);
+
+        $response                   = new AdvertisersResponse($result);
+        return $response;
     }
 
     /**

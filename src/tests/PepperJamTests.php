@@ -5,6 +5,7 @@ namespace FMTCco\Integrations\Tests;
 
 use Dotenv\Dotenv;
 use FMTCco\Integrations\Apis\PepperJam\PepperJamApi;
+use FMTCco\Integrations\Apis\PepperJam\Requests\GetAdvertisers;
 use FMTCco\Integrations\Apis\PepperJam\Requests\GetTransactionDetails;
 
 class PepperJamTests extends \PHPUnit_Framework_TestCase
@@ -15,6 +16,27 @@ class PepperJamTests extends \PHPUnit_Framework_TestCase
         $api                        = $this->getApi();
         if (is_null($api))
             return;
+
+        $request                    = new GetAdvertisers();
+        $request->setStatus('joined');
+        $request->setPage(1);
+
+        $response        = $api->getAdvertisers($request);
+
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\AdvertisersResponse::class, $response);
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Pagination::class, $response->getPagination());
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Status::class, $response->getStatus());
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Requests::class, $response->getRequests());
+        foreach ($response->getData() AS $advertiser)
+        {
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Advertiser::class, $advertiser);
+            foreach ($advertiser->getCategory() AS $category)
+            {
+                $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Category::class, $category);
+            }
+        }
+
+
 
         $request                    = new GetTransactionDetails();
         $request->setStartDate('2017-01-01');
