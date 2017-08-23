@@ -38,6 +38,35 @@ class AffiliateWindowApi
      */
     protected $client;
 
+    /**
+     * @param   string      $affiliate_id
+     * @param   string      $api_password
+     */
+    public function __construct($affiliate_id, $api_password)
+    {
+        $this->affiliate_id         = $affiliate_id;
+        $this->api_password         = $api_password;
+
+
+        $user                       = new \stdClass();
+        $user->iId                  = $this->affiliate_id;
+        $user->sType                = 'affiliate';
+        $user->sPassword            = $this->api_password;
+
+        $options                    = [
+            'exceptions'    => true,
+            'trace' => 1,
+        ];
+
+        $this->client               = new \SoapClient($this->base_url, $options);
+        $this->client->__setSoapHeaders([
+            new \SoapHeader(
+                $this->name_space,
+                'UserAuthentication',
+                $user
+            )
+        ]);
+    }
 
     /**
      * @param GetClickStats|array $request
@@ -72,36 +101,6 @@ class AffiliateWindowApi
             $merchants[]            = new Merchant($item);
         }
         return $merchants;
-    }
-
-    /**
-     * @param   string      $affiliate_id
-     * @param   string      $api_password
-     */
-    public function __construct($affiliate_id, $api_password)
-    {
-        $this->affiliate_id         = $affiliate_id;
-        $this->api_password         = $api_password;
-
-
-        $user                       = new \stdClass();
-        $user->iId                  = $this->affiliate_id;
-        $user->sType                = 'affiliate';
-        $user->sPassword            = $this->api_password;
-
-        $options                    = [
-            'exceptions'    => true,
-            'trace' => 1,
-        ];
-
-        $this->client               = new \SoapClient($this->base_url, $options);
-        $this->client->__setSoapHeaders([
-            new \SoapHeader(
-                $this->name_space,
-                'UserAuthentication',
-                $user
-            )
-        ]);
     }
 
     /**
