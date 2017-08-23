@@ -17,6 +17,18 @@ class PepperJamTests extends \PHPUnit_Framework_TestCase
         if (is_null($api))
             return;
 
+        $response                   = $api->getInvalidLinks([]);
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\InvalidLinkResponse::class, $response);
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Pagination::class, $response->getPagination());
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Status::class, $response->getStatus());
+        $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\Requests::class, $response->getRequests());
+        foreach ($response->getData() AS $invalidLink)
+        {
+            $this->assertInstanceOf(\FMTCco\Integrations\Apis\PepperJam\Responses\InvalidLink::class, $invalidLink);
+        }
+
+
+
         $request                    = new GetAdvertisers();
         $request->setStatus('joined');
         $request->setPage(1);

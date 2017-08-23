@@ -4,9 +4,11 @@ namespace FMTCco\Integrations\Apis\PepperJam;
 
 
 use FMTCco\Integrations\Apis\PepperJam\Requests\GetAdvertisers;
+use FMTCco\Integrations\Apis\PepperJam\Requests\GetInvalidLinks;
 use FMTCco\Integrations\Apis\PepperJam\Requests\GetTransactionDetails;
 use FMTCco\Integrations\Apis\PepperJam\Requests\GetTransactionSummary;
 use FMTCco\Integrations\Apis\PepperJam\Responses\AdvertisersResponse;
+use FMTCco\Integrations\Apis\PepperJam\Responses\InvalidLinkResponse;
 use FMTCco\Integrations\Apis\PepperJam\Responses\TransactionDetailResponse;
 use FMTCco\Integrations\Apis\PepperJam\Responses\TransactionSummaryResponse;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
@@ -71,6 +73,19 @@ class PepperJamApi
         $result                     = $this->makeHttpRequest('GET', 'publisher/advertiser', $request);
 
         $response                   = new AdvertisersResponse($result);
+        return $response;
+    }
+
+    /**
+     * @param   GetInvalidLinks|array $request
+     * @return  InvalidLinkResponse
+     */
+    public function getInvalidLinks ($request = [])
+    {
+        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
+        $result                     = $this->makeHttpRequest('GET', 'publisher/report/invalid-link', $request);
+
+        $response                   = new InvalidLinkResponse($result);
         return $response;
     }
 
