@@ -4,6 +4,7 @@ namespace FMTCco\Integrations\Apis\ImpactRadius;
 
 
 use FMTCco\Integrations\Apis\ImpactRadius\Requests\GetActions;
+use FMTCco\Integrations\Apis\ImpactRadius\Requests\GetCampaigns;
 use FMTCco\Integrations\Apis\ImpactRadius\Responses\GetActionsResponse;
 use FMTCco\Integrations\Apis\ImpactRadius\Responses\GetCampaignsResponse;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
@@ -68,7 +69,7 @@ class ImpactRadiusApi
     }
 
     /**
-     * @param   array $request
+     * @param   GetCampaigns|array $request
      * @return  GetCampaignsResponse
      */
     public function getCampaigns($request = [])
