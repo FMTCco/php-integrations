@@ -106,5 +106,116 @@ class Advertiser
         }
     }
 
+    /**
+     * @return int
+     */
+    public function getAdvertiserId()
+    {
+        return $this->advertiser_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountStatus()
+    {
+        return $this->account_status;
+    }
+
+    /**
+     * @return float
+     */
+    public function getSevenDayEpc()
+    {
+        return $this->seven_day_epc;
+    }
+
+    /**
+     * @return float
+     */
+    public function getThreeMonthEpc()
+    {
+        return $this->three_month_epc;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdvertiserName()
+    {
+        return $this->advertiser_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProgramUrl()
+    {
+        return $this->program_url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelationshipStatus()
+    {
+        return $this->relationship_status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMobileTrackingCertified()
+    {
+        return $this->mobile_tracking_certified;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNetworkRank()
+    {
+        return $this->network_rank;
+    }
+
+    /**
+     * @return PrimaryCategory
+     */
+    public function getPrimaryCategory()
+    {
+        return $this->primary_category;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPerformanceIncentives()
+    {
+        return $this->performance_incentives;
+    }
+
+    /**
+     * @return Action[]
+     */
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getLinkTypes()
+    {
+        return $this->link_types;
+    }
 
 }
