@@ -2,7 +2,9 @@
 
 namespace FMTCco\Integrations\Apis\CommissionJunction;
 
+use FMTCco\Integrations\Apis\CommissionJunction\Requests\GetAdvertisers;
 use FMTCco\Integrations\Apis\CommissionJunction\Requests\GetCommissions;
+use FMTCco\Integrations\Apis\CommissionJunction\Responses\GetAdvertisersResponse;
 use FMTCco\Integrations\Apis\CommissionJunction\Responses\GetCommissionsResponse;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
 use FMTCco\Integrations\Exceptions\InvalidNetworkDateRangeException;
@@ -36,6 +38,20 @@ class CommissionJunctionApi
     {
         $this->api_key              = $api_key;
         $this->client               = new Client();
+    }
+
+    /**
+     * @param   GetAdvertisers|array $request
+     * @return  GetAdvertisersResponse
+     */
+    public function getAdvertisers ($request = [])
+    {
+        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
+        $result                     = $this->makeHttpRequest('GET', 'advertiser-lookup', $request);
+
+        $response                   = new GetAdvertisersResponse($result);
+        $response->clean();
+        return $response;
     }
 
     /**

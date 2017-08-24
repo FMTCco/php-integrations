@@ -6,7 +6,7 @@ namespace FMTCco\Integrations\Apis\CommissionJunction\Responses;
 use FMTCco\Integrations\Traits\SimpleSerializable;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
-class GetCommissionsResponse implements \JsonSerializable
+class GetAdvertisersResponse implements \JsonSerializable
 {
 
     use SimpleSerializable;
@@ -28,17 +28,17 @@ class GetCommissionsResponse implements \JsonSerializable
     protected $page_number;
 
     /**
-     * @var Commission[]
+     * @var Advertiser[]
      */
-    protected $commissions;
+    protected $advertisers;
 
 
     public function __construct($data = [])
     {
-        $this->total_matched            = AU::get($data['commissions']['@attributes']['total-matched']);
-        $this->records_returned         = AU::get($data['commissions']['@attributes']['records-returned']);
-        $this->page_number              = AU::get($data['commissions']['@attributes']['page-number']);
-        $this->commissions              = AU::get($data['commissions']['commission'], []);
+        $this->total_matched            = AU::get($data['advertisers']['@attributes']['total-matched']);
+        $this->records_returned         = AU::get($data['advertisers']['@attributes']['records-returned']);
+        $this->page_number              = AU::get($data['advertisers']['@attributes']['page-number']);
+        $this->advertisers              = AU::get($data['advertisers']['advertiser'], []);
     }
 
     public function clean()
@@ -46,12 +46,11 @@ class GetCommissionsResponse implements \JsonSerializable
         $this->total_matched            = intval($this->total_matched);
 
         if ($this->total_matched == 1) {
-            $this->commissions          = [$this->commissions];
+            $this->advertisers          = [$this->advertisers];
         }
 
-        for ($i = 0; $i < sizeof($this->commissions); $i++) {
-            $this->commissions[$i]      = new Commission($this->commissions[$i]);
-            $this->commissions[$i]->clean();
+        for ($i = 0; $i < sizeof($this->advertisers); $i++) {
+            $this->advertisers[$i]      = new Advertiser($this->advertisers[$i]);
         }
     }
 
@@ -80,11 +79,11 @@ class GetCommissionsResponse implements \JsonSerializable
     }
 
     /**
-     * @return Commission[]
+     * @return Advertiser[]
      */
-    public function getCommissions()
+    public function getAdvertisers()
     {
-        return $this->commissions;
+        return $this->advertisers;
     }
 
 }
