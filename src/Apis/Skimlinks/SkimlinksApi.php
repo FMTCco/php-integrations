@@ -9,6 +9,7 @@ use FMTCco\Integrations\Apis\Skimlinks\Responses\GetCommissionsHistoryResponse;
 use FMTCco\Integrations\Apis\Skimlinks\Requests\GetCommissionsHistory;
 use FMTCco\Integrations\Apis\Skimlinks\Responses\GetCommissionsResponse;
 use FMTCco\Integrations\Apis\Skimlinks\Responses\GetReportMerchantsResponse;
+use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
 use FMTCco\Integrations\Exceptions\UnknownNetworkException;
 use \GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -123,6 +124,11 @@ class SkimlinksApi
         catch (ClientException $exception) {
             $code                   = $exception->getCode();
             $message                = $exception->getResponse()->getBody()->getContents();
+            $message                = json_decode($message, true);
+            if (isset($message['skimlinksAccount']))
+                $message            = $message['skimlinksAccount']['error'];
+            if ($code == 401)
+                throw new InvalidNetworkCredentialsException($message);
             throw new UnknownNetworkException($exception->getMessage());
         }
     }
