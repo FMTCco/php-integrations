@@ -3,12 +3,12 @@
 namespace FMTCco\Integrations\Apis\AffiliateWindow;
 
 
-use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetClickStats;
-use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetMerchantList;
-use FMTCco\Integrations\Apis\AffiliateWindow\Responses\ClickStat;
-use FMTCco\Integrations\Apis\AffiliateWindow\Responses\Merchant;
+use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetTransactions;
+use FMTCco\Integrations\Apis\AffiliateWindow\Responses\Transaction;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
 use FMTCco\Integrations\Exceptions\UnknownNetworkException;
+use \GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class AffiliateWindowApi
 {
@@ -21,86 +21,51 @@ class AffiliateWindowApi
     /**
      * @var string
      */
-    protected $api_password;
+    protected $api_token;
 
     /**
      * @var string
      */
-    protected $base_url             = 'http://api.affiliatewindow.com/v4/AffiliateService?wsdl';
+    protected $account_type;
 
     /**
      * @var string
      */
-    protected $name_space           = 'http://api.affiliatewindow.com/v4/AffiliateService';
+    protected $base_url             = 'https://api.awin.com/';
 
     /**
-     * @var \SoapClient
+     * @var Client
      */
     protected $client;
 
     /**
      * @param   string      $affiliate_id
-     * @param   string      $api_password
+     * @param   string      $api_token
+     * @param   string      $account_type
      */
-    public function __construct($affiliate_id, $api_password)
+    public function __construct($affiliate_id, $api_token, $account_type = 'advertisers')
     {
         $this->affiliate_id         = $affiliate_id;
-        $this->api_password         = $api_password;
-
-
-        $user                       = new \stdClass();
-        $user->iId                  = $this->affiliate_id;
-        $user->sType                = 'affiliate';
-        $user->sPassword            = $this->api_password;
-
-        $options                    = [
-            'exceptions'    => true,
-            'trace' => 1,
-        ];
-
-        $this->client               = new \SoapClient($this->base_url, $options);
-        $this->client->__setSoapHeaders([
-            new \SoapHeader(
-                $this->name_space,
-                'UserAuthentication',
-                $user
-            )
-        ]);
+        $this->api_token            = $api_token;
+        $this->account_type         = $account_type;
+        $this->base_url             = $this->base_url . $this->account_type . '/' . $this->affiliate_id . '/';
+        $this->client               = new Client();
     }
 
     /**
-     * @param GetClickStats|array $request
-     * @return ClickStat[]
+     * @param GetTransactions|array     $request
+     * @return Transaction[]
      */
-    public function getClickStats ($request = [])
+    public function getTransactions ($request = [])
     {
         $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
-        $response                   = $this->makeHttpRequest('getClickStats', $request);
-
-        $clickStats                 = [];
+        $response                   = $this->makeHttpRequest('transactions/', $request);
+        $results                    = [];
         foreach ($response AS $item)
         {
-            $clickStats[]           = new ClickStat($item);
+            $results[]              = new Transaction($item);
         }
-
-        return $clickStats;
-    }
-
-    /**
-     * @param GetMerchantList|array     $request
-     * @return Merchant[]
-     */
-    public function getMerchantList ($request = [])
-    {
-        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
-        $response                   = $this->makeHttpRequest('getMerchantList', $request);
-
-        $merchants                  = [];
-        foreach ($response AS $item)
-        {
-            $merchants[]            = new Merchant($item);
-        }
-        return $merchants;
+        return $results;
     }
 
     /**
@@ -113,16 +78,17 @@ class AffiliateWindowApi
     {
         try
         {
-            $response               = $this->client->$action($query);
-            $responseName           = $action . 'Return';
-            return json_decode(json_encode($response->$responseName), True);
+            $query['accessToken']       = $this->api_token;
+            $this->base_url             = 'https://api.awin.com/publishers/51861/transactions/'; //$this->base_url . $action;
+            $response                   = $this->client->request('get', $this->base_url, [
+                'query'                 => $query,
+            ]);
+            $contents                   = $response->getBody()->getContents();
+            $json                       = json_decode($contents, true);
+            return $json;
         }
-        catch (\SoapFault $exception)
-        {
-            if ($exception->getMessage() == 'Authentication Failed')
-                throw new InvalidNetworkCredentialsException('Invalid AffiliateWindow credentials');
-            else
-                throw new UnknownNetworkException($exception->getMessage());
+        catch (ClientException $exception) {
+            throw $exception;
         }
 
     }

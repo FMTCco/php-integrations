@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: jamesweston
+ * Date: 10/9/17
+ * Time: 10:02 PM
+ */
 
 namespace FMTCco\Integrations\Apis\AffiliateWindow\Responses;
 
@@ -7,45 +13,43 @@ use FMTCco\Integrations\Traits\SimpleSerializable;
 use FMTCco\Integrations\Traits\UnmappedVariables;
 use jamesvweston\Utilities\ArrayUtil as AU;
 
-class Value implements \JsonSerializable
+class Amount implements \JsonSerializable
 {
 
     use SimpleSerializable, UnmappedVariables;
 
-
     /**
      * @var float
      */
-    protected $dAmount;
+    protected $amount;
 
     /**
      * @var string
      */
-    protected $sCurrency;
+    protected $currency;
 
 
     public function __construct($data = [])
     {
-        $this->dAmount                  = AU::getUnset($data, 'dAmount');
-        $this->sCurrency                = AU::getUnset($data, 'sCurrency');
-
+        $this->amount                   = AU::getUnset($data, 'amount');
+        $this->currency                 = AU::getUnset($data, 'currency');
         $this->setUnmappedVariablesFromResponse($data);
     }
 
     /**
      * @return float
      */
-    public function getDAmount()
+    public function getAmount()
     {
-        return $this->dAmount;
+        return $this->amount;
     }
 
     /**
      * @return string
      */
-    public function getSCurrency()
+    public function getCurrency()
     {
-        return $this->sCurrency;
+        return $this->currency;
     }
 
 }
