@@ -20,8 +20,7 @@ class AffiliateWindowTests extends \PHPUnit_Framework_TestCase
         $request->setStartDate('2017-05-01T00:00:00');
         $request->setEndDate('2017-05-30T00:00:00');
 
-        $api->getTransactions($request);
-
+        $transactions               = $api->getTransactions($request);
     }
 
 

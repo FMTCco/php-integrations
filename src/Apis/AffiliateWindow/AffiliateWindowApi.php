@@ -79,7 +79,7 @@ class AffiliateWindowApi
         try
         {
             $query['accessToken']       = $this->api_token;
-            $this->base_url             = 'https://api.awin.com/publishers/51861/transactions/'; //$this->base_url . $action;
+            $this->base_url             = $this->base_url . $action;
             $response                   = $this->client->request('get', $this->base_url, [
                 'query'                 => $query,
             ]);
