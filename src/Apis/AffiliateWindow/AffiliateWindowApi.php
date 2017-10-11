@@ -88,6 +88,8 @@ class AffiliateWindowApi
             return $json;
         }
         catch (ClientException $exception) {
+            if ($exception->getCode() == 401)
+                throw new InvalidNetworkCredentialsException('Invalid AffiliateWindow credentials');
             throw $exception;
         }
 
