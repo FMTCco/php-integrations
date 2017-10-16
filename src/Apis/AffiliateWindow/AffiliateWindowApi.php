@@ -3,7 +3,9 @@
 namespace FMTCco\Integrations\Apis\AffiliateWindow;
 
 
+use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetPrograms;
 use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetTransactions;
+use FMTCco\Integrations\Apis\AffiliateWindow\Responses\Program;
 use FMTCco\Integrations\Apis\AffiliateWindow\Responses\Transaction;
 use FMTCco\Integrations\Exceptions\InvalidNetworkCredentialsException;
 use FMTCco\Integrations\Exceptions\UnknownNetworkException;
@@ -69,6 +71,22 @@ class AffiliateWindowApi
     }
 
     /**
+     * @param   GetPrograms|array $request
+     * @return  Program[]
+     */
+    public function getPrograms ($request = [])
+    {
+        $request                    = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
+        $response                   = $this->makeHttpRequest('programmes/', $request);
+        $results                    = [];
+        foreach ($response AS $item)
+        {
+            $results[]              = new Program($item);
+        }
+        return $results;
+    }
+
+    /**
      * @param   string  $action
      * @param   array   $query
      * @return  array
@@ -79,8 +97,8 @@ class AffiliateWindowApi
         try
         {
             $query['accessToken']       = $this->api_token;
-            $this->base_url             = $this->base_url . $action;
-            $response                   = $this->client->request('get', $this->base_url, [
+            $url                        = $this->base_url . $action;
+            $response                   = $this->client->request('get', $url, [
                 'query'                 => $query,
             ]);
             $contents                   = $response->getBody()->getContents();

@@ -5,6 +5,7 @@ namespace FMTCco\Integrations\Tests;
 
 use Dotenv\Dotenv;
 use FMTCco\Integrations\Apis\AffiliateWindow\AffiliateWindowApi;
+use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetPrograms;
 use FMTCco\Integrations\Apis\AffiliateWindow\Requests\GetTransactions;
 
 class AffiliateWindowTests extends \PHPUnit_Framework_TestCase
@@ -21,6 +22,10 @@ class AffiliateWindowTests extends \PHPUnit_Framework_TestCase
         $request->setEndDate('2017-05-30T00:00:00');
 
         $transactions               = $api->getTransactions($request);
+
+        $request                    = new GetPrograms();
+        $request->setRelationship('joined');
+        $programs                   = $api->getPrograms($request);
     }
 
 
